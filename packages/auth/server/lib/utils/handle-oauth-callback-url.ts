@@ -1,3 +1,4 @@
+import { oidcLogin, verifyOidc } from '../../../../../workforce/native';
 import { formatPath, NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
 import {
   isDisposableEmail,
@@ -35,6 +36,16 @@ export const handleOAuthCallbackUrl = async (options: HandleOAuthCallbackUrlOpti
     c,
     clientOptions,
   });
+
+  if (clientOptions.id === 'oidc') {
+    try {
+      const managed = await oidcLogin(sub, email);
+      await onAuthorize({ userId: managed.userId }, c);
+      return c.redirect(managed.workforce ? '/workforce/me' : redirectPath, 302);
+    } catch {
+      return c.text('workforce-unassigned', 403);
+    }
+  }
 
   if (email.toLowerCase() === legacyServiceAccountEmail() || email.toLowerCase() === deletedServiceAccountEmail()) {
     return c.text('FORBIDDEN', 403);
@@ -233,7 +244,9 @@ export const validateOauth = async (options: HandleOAuthCallbackUrlOptions) => {
   const idToken = tokens.idToken();
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const claims = decodeIdToken(tokens.idToken()) as Record<string, unknown>;
+  const claims = clientOptions.id === 'oidc'
+    ? await verifyOidc(idToken, clientOptions.clientId, deleteCookie(c, 'oidc_workforce_nonce') ?? '')
+    : decodeIdToken(tokens.idToken()) as Record<string, unknown>;
 
   const email = claims.email;
   const name = claims.name;

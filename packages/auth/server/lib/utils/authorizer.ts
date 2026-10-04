@@ -1,3 +1,4 @@
+import { authorizePath } from '../../../../../workforce/native';
 import { assertUserNotDisabledById } from '@documenso/lib/server-only/user/assert-user-not-disabled';
 import type { Context } from 'hono';
 
@@ -18,6 +19,7 @@ type AuthorizeUser = {
  * caller.
  */
 export const onAuthorize = async (user: AuthorizeUser, c: Context<HonoAuthContext>) => {
+  await authorizePath(user.userId, c.req.path);
   await assertUserNotDisabledById({ userId: user.userId });
 
   const metadata = c.get('requestMetadata');

@@ -1,3 +1,4 @@
+import { requestBoundary } from '../../../workforce/native';
 import { tsRestHonoApp } from '@documenso/api/hono';
 import { auth } from '@documenso/auth/server';
 import { csc } from '@documenso/ee/server-only/signing/csc/hono';
@@ -62,6 +63,7 @@ const fileRateLimitMiddleware = createRateLimitMiddleware(fileUploadRateLimit);
 /**
  * Attach session and context to requests.
  */
+app.use(requestBoundary);
 app.use(contextStorage());
 app.use(appContext);
 
