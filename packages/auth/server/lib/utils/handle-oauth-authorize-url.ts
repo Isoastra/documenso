@@ -70,6 +70,12 @@ export const handleOAuthAuthorizeUrl = async (options: HandleOAuthAuthorizeUrlOp
 
   url.searchParams.set('prompt', prompt);
 
+  if (clientOptions.id === 'oidc') {
+    const nonce = generateState();
+    url.searchParams.set('nonce', nonce);
+    setCookie(c, 'oidc_workforce_nonce', nonce, { ...sessionCookieOptions, sameSite: 'lax', maxAge: oauthCookieMaxAge });
+  }
+
   setCookie(c, `${clientOptions.id}_oauth_state`, state, {
     ...sessionCookieOptions,
     sameSite: 'lax',

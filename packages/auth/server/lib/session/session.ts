@@ -1,3 +1,4 @@
+import { mintSession, validSession } from '../../../../../workforce/native';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import type { RequestMetadata } from '@documenso/lib/universal/extract-request-metadata';
 import { prisma } from '@documenso/prisma';
@@ -49,8 +50,8 @@ export const createSession = async (token: string, userId: number, metadata: Req
     userAgent: metadata.userAgent ?? null,
   };
 
-  await prisma.session.create({
-    data: session,
+  await mintSession(session, async () => {
+    await prisma.session.create({ data: session });
   });
 
   await prisma.userSecurityAuditLog.create({
@@ -67,6 +68,10 @@ export const createSession = async (token: string, userId: number, metadata: Req
 
 export const validateSessionToken = async (token: string): Promise<SessionValidationResult> => {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
+
+  if (!(await validSession(sessionId))) {
+    return { session: null, user: null, isAuthenticated: false };
+  }
 
   const result = await prisma.session.findUnique({
     where: {
