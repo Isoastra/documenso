@@ -1,0 +1,280 @@
+{
+  "image": "documenso:workforce-20261003-3",
+  "imageId": "4d8f811f771f992051a48f2a6f7a512b97e86b1945eaecfc1bb76bd948669d76",
+  "variants": {
+    "https-absent": {
+      "result": "passed",
+      "cookieName": "sessionId",
+      "applicationOrigin": "https://sign.isoastra.com",
+      "nodeEnvProduction": false,
+      "userId": "5",
+      "extension": {
+        "issuer": "https://auth.isoastra.com",
+        "subject": "fixture-image-f503a848-15fd-4d01-b34c-a174cf060abd",
+        "grants": [],
+        "authorityEpoch": "1",
+        "desiredVersion": "2",
+        "effectiveGrants": [],
+        "revocationEpoch": "2",
+        "revocation": {
+          "tokens": true,
+          "revision": "2",
+          "sessions": true,
+          "delegations": true
+        },
+        "provisioningState": "confirmed"
+      },
+      "preserved": {
+        "users": [
+          {
+            "id": 1,
+            "email": "serviceaccount@sign.isoastra.com",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 2,
+            "email": "deleted-account@sign.isoastra.com",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 3,
+            "email": "ronit@isoastra.com",
+            "roles": [
+              "ADMIN",
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 4,
+            "email": "same-customer@example.invalid",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          }
+        ],
+        "organisations": [
+          {
+            "id": "org_edriifblkokdowti",
+            "ownerUserId": 2
+          },
+          {
+            "id": "org_fetzuhmyvswdrtah",
+            "ownerUserId": 3
+          },
+          {
+            "id": "org_fsecwboncznriuxb",
+            "ownerUserId": 1
+          },
+          {
+            "id": "org_mkwmubumdevfbtuc",
+            "ownerUserId": 4
+          }
+        ],
+        "members": 4,
+        "teams": 4,
+        "customerKeys": 1,
+        "accounts": [
+          {
+            "id": "cmutdu5s70001nc5u5ji3piv9",
+            "userId": 3,
+            "subject": "388597630173413379"
+          }
+        ]
+      },
+      "limits": [
+        "Disposable PostgreSQL only; test-only IdP fetch transport; real ZITADEL network not qualified."
+      ]
+    },
+    "https-production": {
+      "result": "passed",
+      "cookieName": "__Secure-sessionId",
+      "applicationOrigin": "https://sign.isoastra.com",
+      "nodeEnvProduction": true,
+      "userId": "5",
+      "extension": {
+        "issuer": "https://auth.isoastra.com",
+        "subject": "fixture-image-010dda53-732a-466d-bac1-804045bdb030",
+        "grants": [],
+        "authorityEpoch": "1",
+        "desiredVersion": "2",
+        "effectiveGrants": [],
+        "revocationEpoch": "2",
+        "revocation": {
+          "tokens": true,
+          "revision": "2",
+          "sessions": true,
+          "delegations": true
+        },
+        "provisioningState": "confirmed"
+      },
+      "preserved": {
+        "users": [
+          {
+            "id": 1,
+            "email": "serviceaccount@sign.isoastra.com",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 2,
+            "email": "deleted-account@sign.isoastra.com",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 3,
+            "email": "ronit@isoastra.com",
+            "roles": [
+              "ADMIN",
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 4,
+            "email": "same-customer@example.invalid",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          }
+        ],
+        "organisations": [
+          {
+            "id": "org_eehnaxevahxxrnzz",
+            "ownerUserId": 1
+          },
+          {
+            "id": "org_elzaswdibvwlswvs",
+            "ownerUserId": 3
+          },
+          {
+            "id": "org_osthsfcflwtlzfmo",
+            "ownerUserId": 4
+          },
+          {
+            "id": "org_rnixsxrsuihyydwc",
+            "ownerUserId": 2
+          }
+        ],
+        "members": 4,
+        "teams": 4,
+        "customerKeys": 1,
+        "accounts": [
+          {
+            "id": "cmutdvas70001mt5t1xjfzxkc",
+            "userId": 3,
+            "subject": "388597630173413379"
+          }
+        ]
+      },
+      "limits": [
+        "Disposable PostgreSQL only; test-only IdP fetch transport; real ZITADEL network not qualified."
+      ]
+    },
+    "http": {
+      "result": "passed",
+      "cookieName": "sessionId",
+      "applicationOrigin": "http://127.0.0.1:3000",
+      "nodeEnvProduction": false,
+      "userId": "5",
+      "extension": {
+        "issuer": "https://auth.isoastra.com",
+        "subject": "fixture-image-4fa54389-8539-4cc9-b4e7-6ffba1b5dac5",
+        "grants": [],
+        "authorityEpoch": "1",
+        "desiredVersion": "2",
+        "effectiveGrants": [],
+        "revocationEpoch": "2",
+        "revocation": {
+          "tokens": true,
+          "revision": "2",
+          "sessions": true,
+          "delegations": true
+        },
+        "provisioningState": "confirmed"
+      },
+      "preserved": {
+        "users": [
+          {
+            "id": 1,
+            "email": "serviceaccount@127.0.0.1",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 2,
+            "email": "deleted-account@127.0.0.1",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 3,
+            "email": "ronit@isoastra.com",
+            "roles": [
+              "ADMIN",
+              "USER"
+            ],
+            "disabled": false
+          },
+          {
+            "id": 4,
+            "email": "same-customer@example.invalid",
+            "roles": [
+              "USER"
+            ],
+            "disabled": false
+          }
+        ],
+        "organisations": [
+          {
+            "id": "org_cxontncllfuolkri",
+            "ownerUserId": 3
+          },
+          {
+            "id": "org_dkbfyhimiweeescx",
+            "ownerUserId": 2
+          },
+          {
+            "id": "org_uldlxbdnnzubifat",
+            "ownerUserId": 4
+          },
+          {
+            "id": "org_umfuauhmfyztzsae",
+            "ownerUserId": 1
+          }
+        ],
+        "members": 4,
+        "teams": 4,
+        "customerKeys": 1,
+        "accounts": [
+          {
+            "id": "cmutdwdp80001lp5vvzx3ra3t",
+            "userId": 3,
+            "subject": "388597630173413379"
+          }
+        ]
+      },
+      "limits": [
+        "Disposable PostgreSQL only; test-only IdP fetch transport; real ZITADEL network not qualified."
+      ]
+    }
+  },
+  "regression": "old2 HTTPS absent NODE_ENV reproduced profile404; candidate3 all variants passed"
+}
