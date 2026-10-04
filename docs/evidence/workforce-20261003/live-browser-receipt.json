@@ -1,0 +1,108 @@
+{
+  "qualifiedAt": "2026-10-04T05:39:00Z",
+  "imageDigest": "sha256:4d8f811f771f992051a48f2a6f7a512b97e86b1945eaecfc1bb76bd948669d76",
+  "positive": {
+    "subject": "393567966563663989",
+    "observedAt": "2026-10-04T05:35:49.627Z",
+    "existingNativeIssuedCookie": true,
+    "profile": {
+      "path": "/workforce/me",
+      "status": 200,
+      "body": {
+        "name": "Managed workforce account",
+        "subject": "393567966563663989",
+        "scope": "signing:production",
+        "grants": [
+          {
+            "role": "workforce-self",
+            "resource": "signing:production"
+          }
+        ]
+      }
+    },
+    "denied": [
+      {
+        "path": "/documents",
+        "status": 403,
+        "body": "workforce-profile-scope-only"
+      },
+      {
+        "path": "/api/v1/documents",
+        "status": 403,
+        "body": "workforce-profile-scope-only"
+      },
+      {
+        "path": "/api/v2/documents",
+        "status": 403,
+        "body": "workforce-profile-scope-only"
+      },
+      {
+        "path": "/admin",
+        "status": 403,
+        "body": "workforce-profile-scope-only"
+      },
+      {
+        "path": "/settings",
+        "status": 403,
+        "body": "workforce-profile-scope-only"
+      },
+      {
+        "path": "/teams",
+        "status": 403,
+        "body": "workforce-profile-scope-only"
+      }
+    ]
+  },
+  "revocation": {
+    "nativeConfirmedAt": "2026-10-04T05:36:25Z",
+    "observedAt": "2026-10-04T05:37:09.390Z",
+    "elapsedSeconds": 44.39,
+    "nativeUserId": 7,
+    "authorityEpoch": "1",
+    "desiredVersion": "3",
+    "revocationEpoch": "1",
+    "active": false,
+    "directGrants": [],
+    "effectiveGrants": [],
+    "acknowledgments": {
+      "sessions": true,
+      "tokens": true,
+      "delegations": true
+    },
+    "existingCookieProfileStatus": 404,
+    "stockUnauthenticatedPathResult": "/documents,/admin,/settings redirect to sign-in; APIs reject unauthenticated request",
+    "actualBrowserDocumentsDestination": "/signin"
+  },
+  "repeatedNativeCallback": {
+    "subject": "393567966563663989",
+    "passwordMfaCompleted": true,
+    "status": 403,
+    "body": "workforce-unassigned"
+  },
+  "freshUnknownNativeCallback": {
+    "subject": "393579883101421685",
+    "neverScimAdopted": true,
+    "passwordMfaCompleted": true,
+    "status": 403,
+    "body": "workforce-unassigned"
+  },
+  "screenshotsViewed": [
+    "fresh-unknown-denied.png",
+    "scoped-profile.png",
+    "revoked-login.png",
+    "revoked-callback.png"
+  ],
+  "limitations": [
+    "Profile-only adapter grants no signing/documents/team/admin access",
+    "No Aakash Documenso assignment"
+  ],
+  "screenshotsSha256": {
+    "fresh-unknown-denied.png": "8606b6c67783fedea39be1056771947bbf8691073e6dc6a472367ac42772eeba",
+    "scoped-profile.png": "4e773cfdae921368717257bff08dcc37a17c8a54cb2aa38481d42e1ba365e176",
+    "revoked-login.png": "ddd29597ce6daede7a325f649955d6a19b8676648a653ef182334ab66bfd4bd2",
+    "revoked-callback.png": "8606b6c67783fedea39be1056771947bbf8691073e6dc6a472367ac42772eeba"
+  },
+  "nativeSourceCommit": "b42eb4be8a32d22a4a70311a74faccb2933a1ea8",
+  "qualificationFixtureCommit": "ddf8f8a9efe383d69bb11887e5ca39024ba0713b",
+  "baseUrl": "https://sign.isoastra.com"
+}
