@@ -1,7 +1,22 @@
 # Native image qualification
 
 Run `bash workforce/image-fixture/run.sh documenso:workforce-RELEASE` on the native
-Linux deployment builder after building the frozen application image. Requires
+Linux deployment builder after building the frozen application image. Also run
+the deployed HTTPS origin with both native environment predicates:
+
+```sh
+bash workforce/image-fixture/run.sh documenso:workforce-RELEASE https://sign.isoastra.com absent
+bash workforce/image-fixture/run.sh documenso:workforce-RELEASE https://sign.isoastra.com production
+```
+
+The first case must mint and enforce `sessionId`; the second must mint and enforce
+`__Secure-sessionId`. Tests send the real signed cookies through the application
+HTTP path and assert the actual minted cookie name. This catches a guard that
+guesses a secure prefix from HTTPS alone instead of matching the frozen native
+`NODE_ENV` predicate. The HTTPS label configures callback/cookie behavior; the
+fixture HTTP listener stays inside its disposable Docker network.
+
+Requires
 Docker and the PostgreSQL 18 image; the application image supplies Node 22,
 Prisma, the compiled auth routes and the native workforce module. The runner
 refuses existing fixture container/network names and removes only its own

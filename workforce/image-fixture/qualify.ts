@@ -7,6 +7,9 @@ import { prisma } from '/app/apps/remix/build/server/hono/packages/prisma/index.
 // A production DSN must never pass this guard, even if this fixture is invoked accidentally.
 assert.equal(new URL(process.env.NEXT_PRIVATE_DATABASE_URL).hostname, 'documenso-qualified-pg');
 const base = 'http://127.0.0.1:3000';
+const origin = process.env.NEXT_PUBLIC_WEBAPP_URL;
+const expectedCookie = process.env.NODE_ENV === 'production' && origin.startsWith('https:')
+  ? '__Secure-sessionId' : 'sessionId';
 const userExtension = 'urn:isoastra:params:scim:schemas:extension:workforce:2.0:User';
 const groupExtension = 'urn:isoastra:params:scim:schemas:extension:workforce:2.0:Group';
 const subject = 'fixture-image-' + randomUUID();
@@ -15,7 +18,7 @@ const read = 'fixture-read-native-qualification-token';
 const cookies = new Map();
 
 const request = async (method, path, body = undefined, bearer = undefined, revision = undefined) => {
-  const headers = { origin: base, 'user-agent': 'Native image qualification' };
+  const headers = { origin, 'user-agent': 'Native image qualification' };
   if (body !== undefined) {
     headers['content-type'] = path.startsWith('/scim/') ? 'application/scim+json' : 'application/json';
   }
@@ -91,6 +94,7 @@ try {
   }
   const accepted = await login(subject);
   assert.equal(accepted.status, 302);
+  assert.ok(cookies.has(expectedCookie), 'Actual mint must use the frozen native cookie predicate');
   assert.equal(accepted.headers.get('location'), '/workforce/me');
   assert.equal((await request('GET', '/workforce/me')).status, 200);
   for (const path of ['/documents', '/api/v2/documents', '/admin', '/settings/security', '/api/trpc/user.getProfile']) {
@@ -119,7 +123,8 @@ try {
   }
   assert.equal((await pool().query('SELECT count(*) AS n FROM "Account" WHERE "userId"=$1 AND (access_token IS NOT NULL OR refresh_token IS NOT NULL OR id_token IS NOT NULL)', [id])).rows[0].n, '0');
   assert.equal((await pool().query('SELECT count(*) AS n FROM "Account" WHERE "providerAccountId"=$1', ['fixture-unknown'])).rows[0].n, '0');
-  console.log(JSON.stringify({ result: 'passed', userId: id, extension: disabled.body[userExtension], preserved: before,
+  console.log(JSON.stringify({ result: 'passed', cookieName: expectedCookie, applicationOrigin: origin,
+    nodeEnvProduction: process.env.NODE_ENV === 'production', userId: id, extension: disabled.body[userExtension], preserved: before,
     limits: ['Disposable PostgreSQL only; test-only IdP fetch transport; real ZITADEL network not qualified.'] }));
 } finally {
   await pool().end();

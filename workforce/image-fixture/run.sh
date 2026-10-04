@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 # Execute on the native Linux deployment builder. No production env or database is read.
-image=${1:?usage: run.sh documenso:workforce-RELEASE}
+image=${1:?usage: run.sh documenso:workforce-RELEASE [application-origin] [absent|production]}
+application_origin=${2:-http://127.0.0.1:3000}
+node_env=${3:-absent}
+if [ "$node_env" != absent ] && [ "$node_env" != production ]; then
+  printf 'Invalid fixture NODE_ENV mode\n' >&2
+  exit 1
+fi
 test_dir=$(cd "$(dirname "$0")" && pwd)
 fixture=$(mktemp -d /tmp/documenso-image-qualification.XXXXXX)
 docker_cmd=(sudo docker)
@@ -34,7 +40,6 @@ NEXT_PRIVATE_DIRECT_DATABASE_URL=postgresql://fixture:fixture@documenso-qualifie
 NEXTAUTH_SECRET=fixture-native-runtime-secret-at-least-32-characters
 NEXT_PRIVATE_ENCRYPTION_KEY=0123456789abcdef0123456789abcdef
 NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY=abcdef0123456789abcdef0123456789
-NEXT_PUBLIC_WEBAPP_URL=http://127.0.0.1:3000
 NEXT_PRIVATE_OIDC_WELL_KNOWN=https://auth.isoastra.com/.well-known/openid-configuration
 NEXT_PRIVATE_OIDC_CLIENT_ID=fixture-client
 NEXT_PRIVATE_OIDC_CLIENT_SECRET=fixture-secret
@@ -43,6 +48,12 @@ WORKFORCE_SCIM_TOKEN_FILE=/fixture/write.token
 WORKFORCE_SCIM_READ_TOKEN_FILE=/fixture/read.token
 NODE_OPTIONS=--experimental-strip-types --import /fixture/preload.ts
 ENV
+printf 'NEXT_PUBLIC_WEBAPP_URL=%s\n' "$application_origin" >> "$fixture/app.env"
+if [ "$node_env" = production ]; then
+  printf 'NODE_ENV=production\n' >> "$fixture/app.env"
+else
+  printf 'NODE_ENV=\n' >> "$fixture/app.env"
+fi
 "${docker_cmd[@]}" network create "$network" >/dev/null
 "${docker_cmd[@]}" run -d --name "$postgres" --network "$network" \
   --label isoastra.test=documenso-image-qualification \
