@@ -192,7 +192,8 @@ export const requestBoundary = async (c: any, next: () => Promise<void>) => {
    return c.text('Workforce native API credentials are unavailable', 403);
   }
  }
- const cookieName = process.env.NEXT_PUBLIC_WEBAPP_URL?.startsWith('https:') ? '__Secure-sessionId' : 'sessionId';
+ const secureCookie = process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_WEBAPP_URL?.startsWith('https:');
+ const cookieName = secureCookie ? '__Secure-sessionId' : 'sessionId';
  const token = await getSignedCookie(c, process.env.NEXTAUTH_SECRET!, cookieName);
  if (typeof token !== 'string') {
   return next();
